@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>LAB A+A — Appraiser & Architect · Tepic, Nayarit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,900&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+/* ═══════════════════════════════════════════════
+   LAB A+A — WARM MINIMALIST EDITION
+   Paleta: crema · café cálido · rojo logo
+   Estilo: editorial · old school · arquitectónico
+═══════════════════════════════════════════════ */
+:root{
+  /* ── Fondo cálido */
+  --cream:        #F3EDE0;   /* papel crema */
+  --cream-alt:    #EBE2CF;   /* crema oscuro */
+  --cream-card:   #F9F5EE;   /* tarjeta */
+
+  /* ── Tono oscuro CÁLIDO (nunca negro puro) */
+  --warm-dark:    #231C10;   /* carbón cálido */
+  --warm-dark-2:  #2E2416;   /* secciones oscuras */
+
+  /* ── Tipografía */
+  --ink:          #221A0E;   /* texto principal */
+  --ink-mid:      #5C4A36;   /* texto secundario */
+  --ink-dim:      #9C866E;   /* texto atenuado */
+  --ink-faint:    #C2AE96;   /* ghost */
+
+  /* ── Acento — logo */
+  --red:          #E8192C;   /* rojo del logo */
+  --red-deep:     #B8131F;   /* rojo oscuro hover */
+
+  /* ── Borde */
+  --border:       rgba(34,26,14,0.10);
+  --border-mid:   rgba(34,26,14,0.18);
+  --border-strong:rgba(34,26,14,0.30);
+
+  /* ── Espaciado */
+  --pad-section:  140px;
+  --pad-h:        64px;
+}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--cream);
+  color:var(--ink);
+  font-family:'Fraunces',serif;
+  font-weight:300;
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* ── Grano sutil (papel impreso) */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  z-index:999;pointer-events:none;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size:220px;
+  opacity:0.022;
+}
+
+/* ── Cursor minimalista ── */
+#cur{position:fixed;pointer-events:none;z-index:9999;top:0;left:0;}
+#cur .dot{
+  position:absolute;width:7px;height:7px;
+  background:var(--red);border-radius:50%;
+  transform:translate(-50%,-50%);
+  transition:transform 180ms cubic-bezier(0.34,1.56,0.64,1);
+}
+body.hov #cur .dot{transform:translate(-50%,-50%) scale(2.5);}
+
+/* ── Barra progreso ── */
+.scroll-progress{
+  position:fixed;top:0;left:0;height:1.5px;width:0%;
+  background:var(--red);z-index:1000;
+}
+
+/* ══════════════════════════════════════════
+   NAV
+══════════════════════════════════════════ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:22px var(--pad-h);
+  border-bottom:1px solid transparent;
+  background:transparent;
+  transition:background 400ms,border-color 400ms;
+}
+nav.scrolled{
+  background:rgba(243,237,224,0.95);
+  border-color:var(--border);
+  backdrop-filter:blur(12px);
+}
+.nav-logo{display:flex;align-items:center;gap:14px;}
+.nav-logo img{height:36px;width:36px;object-fit:contain;}
+.nav-brand{
+  font-family:'Fraunces',serif;font-weight:300;
+  font-size:17px;letter-spacing:0.05em;color:var(--ink);
+}
+.nav-brand em{font-style:normal;color:var(--red);}
+.nav-links{display:flex;gap:40px;list-style:none;}
+.nav-links a{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--ink-dim);text-decoration:none;
+  transition:color 200ms;
+}
+.nav-links a:hover{color:var(--ink);}
+.nav-cta{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:0.18em;text-transform:uppercase;
+  padding:10px 22px;
+  border:1px solid var(--red);
+  color:var(--red);text-decoration:none;
+  position:relative;overflow:hidden;transition:color 200ms;
+}
+.nav-cta::before{
+  content:'';position:absolute;inset:0;
+  background:var(--red);transform:scaleX(0);
+  transform-origin:left;transition:transform 480ms cubic-bezier(0.16,1,0.3,1);
+}
+.nav-cta:hover::before{transform:scaleX(1);}
+.nav-cta:hover{color:var(--cream);}
+.nav-cta span{position:relative;z-index:1;}
+
+/* ══════════════════════════════════════════
+   EYEBROW — etiqueta editorial
+══════════════════════════════════════════ */
+.eyebrow{
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;letter-spacing:0.28em;text-transform:uppercase;
+  color:var(--red);margin-bottom:24px;
+  display:flex;align-items:center;gap:14px;
+}
+.eyebrow::before{content:'';width:32px;height:1px;background:var(--red);}
+.eyebrow.neutral{color:var(--ink-mid);}
+.eyebrow.neutral::before{background:var(--ink-mid);}
+
+/* ══════════════════════════════════════════
+   TÍTULO SECCIÓN
+══════════════════════════════════════════ */
+.s-title{
+  font-family:'Fraunces',serif;font-weight:300;
+  font-size:clamp(38px,5vw,76px);
+  line-height:0.93;letter-spacing:-0.04em;
+  color:var(--ink);max-width:660px;margin-bottom:72px;
+}
+.s-title em{
+  font-style:italic;font-weight:900;color:var(--red);
+}
+
+/* ══════════════════════════════════════════
+   REVEAL
+══════════════════════════════════════════ */
+.reveal{
+  opacity:0;transform:translateY(24px);
+  transition:opacity 800ms cubic-bezier(0.16,1,0.3,1),
+             transform 800ms cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+/* ══════════════════════════════════════════
+   HERO
+══════════════════════════════════════════ */
+.hero{
+  position:relative;min-height:100vh;
+  display:flex;align-items:flex-end;overflow:hidden;
+}
+/* Ken Burns slideshow */
+.slides{position:absolute;inset:0;z-index:0;}
+.slide{
+  position:absolute;inset:0;
+  background-size:cover;background-position:center;
+  opacity:0;will-change:opacity,transform;
+}
+.slide:nth-child(1){background-image:url('imgs/hero1.jpg');background-position:center 55%;animation:kb1 24s ease-in-out infinite 0s;}
+.slide:nth-child(2){background-image:url('imgs/hero2.jpg');background-position:center 50%;animation:kb2 24s ease-in-out infinite -6s;}
+.slide:nth-child(3){background-image:url('imgs/hero3.jpg');background-position:center 40%;animation:kb3 24s ease-in-out infinite -12s;}
+.slide:nth-child(4){background-image:url('imgs/hero4.jpg');background-position:center 45%;animation:kb4 24s ease-in-out infinite -18s;}
+@keyframes kb1{0%{opacity:0;transform:scale(1.08) translate(1%,0.5%);}8%{opacity:1;}33%{opacity:1;transform:scale(1.14) translate(-0.5%,-0.5%);}41%{opacity:0;}100%{opacity:0;}}
+@keyframes kb2{0%{opacity:0;transform:scale(1.10) translate(-0.5%,0);}8%{opacity:1;}33%{opacity:1;transform:scale(1.16) translate(0.5%,0.5%);}41%{opacity:0;}100%{opacity:0;}}
+@keyframes kb3{0%{opacity:0;transform:scale(1.06) translate(0,0.5%);}8%{opacity:1;}33%{opacity:1;transform:scale(1.13) translate(-0.5%,-0.5%);}41%{opacity:0;}100%{opacity:0;}}
+@keyframes kb4{0%{opacity:0;transform:scale(1.09) translate(0.5%,0);}8%{opacity:1;}33%{opacity:1;transform:scale(1.15) translate(-0.5%,0.5%);}41%{opacity:0;}100%{opacity:0;}}
+
+/* Overlay cálido — no negro puro */
+.hero-overlay{
+  position:absolute;inset:0;z-index:1;
+  background:
+    linear-gradient(to right,rgba(22,14,6,0.90) 42%,rgba(22,14,6,0.22) 100%),
+    linear-gradient(to top,rgba(22,14,6,0.72) 0%,transparent 48%);
+}
+/* Línea vertical izquierda */
+.hero-accent-line{
+  position:absolute;left:0;top:0;bottom:0;width:2px;
+  background:linear-gradient(to bottom,transparent,var(--red) 25%,var(--red) 75%,transparent);
+  z-index:3;transform:scaleY(0);transform-origin:center;
+  animation:lineGrow 1.4s cubic-bezier(0.16,1,0.3,1) 0.4s forwards;
+}
+@keyframes lineGrow{to{transform:scaleY(1);}}
+
+.hero-content{
+  position:relative;z-index:4;
+  padding:0 var(--pad-h) 96px;
+  max-width:860px;
+}
+
+/* Texto animado */
+.rw{overflow:hidden;display:block;}
+.rl{display:block;opacity:0;transform:translateY(110%) skewY(1.5deg);}
+.rl.go{
+  opacity:1;transform:translateY(0) skewY(0);
+  transition:opacity 900ms cubic-bezier(0.16,1,0.3,1),
+             transform 900ms cubic-bezier(0.16,1,0.3,1);
+}
+
+.hero-eyebrow{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:0.28em;text-transform:uppercase;
+  color:rgba(243,237,224,0.55);margin-bottom:32px;
+  display:flex;align-items:center;gap:14px;
+  opacity:0;animation:fadeSlideX 800ms cubic-bezier(0.16,1,0.3,1) 0.2s forwards;
+}
+.hero-eyebrow::before{content:'';width:32px;height:1px;background:var(--red);}
+@keyframes fadeSlideX{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
+
+.hero-h1{
+  font-family:'Fraunces',serif;font-weight:300;
+  font-size:clamp(52px,8.5vw,128px);
+  line-height:0.9;letter-spacing:-0.045em;
+  color:#F3EDE0;/* crema sobre oscuro */
+}
+.hero-h1 em{
+  font-style:italic;font-weight:900;color:var(--red);
+}
+
+.hero-sub{
+  font-family:'Fraunces',serif;font-weight:300;
+  font-size:17px;line-height:1.75;
+  color:rgba(243,237,224,0.50);
+  max-width:480px;margin-top:32px;
+}
+
+.hero-actions{margin-top:52px;display:flex;gap:14px;}
+
+/* Botones */
+.btn{
+  display:inline-block;padding:15px 36px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;font-weight:400;letter-spacing:0.18em;text-transform:uppercase;
+  text-decoration:none;cursor:none;
+  position:relative;overflow:hidden;
+  transition:color 200ms;
+}
+.btn.solid{background:var(--red);color:var(--cream);}
+.btn.solid::before{
+  content:'';position:absolute;inset:0;
+  background:var(--red-deep);transform:scaleX(0);
+  transform-origin:left;transition:transform 460ms cubic-bezier(0.16,1,0.3,1);
+}
+.btn.solid:hover::before{transform:scaleX(1);}
+.btn.outline{
+  border:1px solid rgba(243,237,224,0.35);
+  color:rgba(243,237,224,0.75);
+}
+.btn.outline:hover{border-color:rgba(243,237,224,0.7);color:#F3EDE0;}
+.btn.outline-dark{border:1px solid var(--border-mid);color:var(--ink-mid);}
+.btn.outline-dark:hover{border-color:var(--red);color:var(--red);}
+.btn span{position:relative;z-index:1;}
+
+/* Stats en hero — estilo Xencalli */
+.hero-stats-row{
+  margin-top:60px;display:flex;gap:0;
+  border:1px solid rgba(243,237,224,0.14);
+  max-width:520px;
+}
+.hstat{flex:1;padding:20px 24px;border-right:1px solid rgba(243,237,224,0.1);}
+.hstat:last-child{border-right:none;}
+.hstat-n{
+  font-family:'Fraunces',serif;font-weight:300;
+  font-size:clamp(26px,3vw,42px);line-height:1;letter-spacing:-0.04em;
+  color:#F3EDE0;
+}
+.hstat-n em{font-style:normal;color:var(--red);}
+.hstat-l{
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  color:rgba(243,237,224,0.38);letter-spacing:0.2em;text-transform:uppercase;margin-top:8px;
+}
+
+/* Slide dots */
+.slide-dots{
+  position:absolute;right:52px;top:50%;transform:translateY(-50%);
+  z-index:4;display:flex;flex-direction:column;gap:10px;
+}
+.sdot{width:1.5px;height:26px;background:rgba(243,237,224,0.15);position:relative;overflow:hidden;}
+.sdot-fill{position:absolute;top:0;left:0;right:0;background:var(--red);height:0;}
+.sdot.active .sdot-fill{animation:fillDot 6s linear forwards;}
+@keyframes fillDot{from{height:0}to{height:100%}}
+
+.scroll-cue{
+  position:absolute;bottom:36px;left:var(--pad-h);z-index:4;
+  display:flex;align-items:center;gap:14px;
+  opacity:0;animation:fadeIn 1s ease 2s forwards;
+}
+.sc-line{
+  width:48px;height:1px;
+  background:linear-gradient(to right,var(--red),transparent);
+}
+.sc-txt{
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  letter-spacing:0.3em;text-transform:uppercase;
+  color:rgba(243,237,224,0.25);
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+/* ══════════════════════════════════════════
+   MARQUEE
+══════════════════════════════════════════ */
+.mq-wrap{
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  overflow:hidden;padding:14px 0;
+  background:var(--cream-alt);
+  position:relative;z-index:2;
+}
+.mq-track{display:flex;animation:mqScroll 34s linear infinite;white-space:nowrap;}
+.mq-item{
+  display:inline-flex;align-items:center;gap:20px;padding:0 44px;
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:0.26em;text-transform:uppercase;color:var(--ink-faint);
+}
+.mq-dot{width:3px;height:3px;background:var(--red);border-radius:50%;flex-shrink:0;}
+@keyframes mqScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ══════════════════════════════════════════
+   STATS ROW
+══════════════════════════════════════════ */
+.stats-section{position:relative;z-index:2;padding:80px var(--pad-h);}
+.stats-row{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border:1px solid var(--border-mid);
+}
+.stat{
+  padding:48px 36px;border-right:1px solid var(--border);
+  transition:background 300ms;
+}
+.stat:last-child{border-right:none;}
+.stat:hover{background:var(--cream-alt);}
+.stat-number{
+  font-family:'Fraunces',serif;font-weight:300;
+  font-size:clamp(48px,5vw,72px);line-height:1;letter-spacing:-0.045em;
+  color:var(--ink);
+}
+.stat-number span{color:var(--red);}
+.stat-label{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  color:var(--ink-dim);text-transform:uppercase;letter-spacing:0.18em;margin-top:14px;
+}
+.stat-delta{
+  font-family:'JetBrains Mono',monospace;font-size:10px;margin-top:8px;color:var(--ink-faint);
+}
+
+/* ══════════════════════════════════════════
+   NOSOTROS
+══════════════════════════════════════════ */
+#nosotros{position:relative;z-index:2;}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;}
+.about-img{position:relative;overflow:hidden;min-height:600px;}
+.about-img img{
+  width:100%;height:110%;object-fit:cover;margin-top:-5%;
+  transition:transform 1400ms cubic-bezier(0.16,1,0.3,1);
+  filter:sepia(10%) saturate(90%);/* tonalidad cálida en imágenes */
+}
+.about-img:hover img{transform:scale(1.05);}
+.about-img-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to right,transparent 55%,var(--cream) 100%);
+}
+.about-text{
+  background:var(--cream);
+  border-left:1px solid var(--border);
+  padding:104px 72px;
+  display:flex;flex-direction:column;justify-content:center;
+}
+.about-body{
+  font-family:'Fraunces',serif;font-weight:300;
+  font-size:18px;color:var(--ink-mid);line-height:1.82;
+  margin-top:28px;max-width:480px;
+}
+.about-pills{margin-top:40px;display:flex;flex-wrap:wrap;gap:8px;}
+.pill{
+  font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:0.16em;
+  text-transform:uppercase;padding:8px 16px;
+  border:1px solid var(--border-mid);
+  color:var(--ink-dim);cursor:none;
+  transition:border-color 300ms,color 300ms,transform 360ms cubic-bezier(0.34,1.56,0.64,1);
+}
+.pill:hover{border-color:var(--red);color:var(--red);transform:translateY(-3px);}
+
+/* ══════════════════════════════════════════
+   SERVICIOS
+══════════════════════════════════════════ */
+#servicios{
+  position:relative;z-index:2;
+  padding:var(--pad-section) var(--pad-h);
+  background:var(--cream-alt);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border-mid);}
+.svc-card{
+  background:var(--cream-card);
+  padding:56px 44px;cursor:none;
+  position:relative;overflow:hidden;
+  transition:background 300ms;
+}
+.svc-card:hover{background:#FBF7F2;}
+/* Línea superior animada */
+.svc-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1.5px;
+  background:var(--red);transform:scaleX(0);transform-origin:left;
+  transition:transform 560ms cubic-bezier(0.16,1,0.3,1);
+}
+.svc-card:hover::before{transform:scaleX(1);}
+/* Número grande fantasma */
+.svc-ghost{
+  position:absolute;bottom:-20px;right:-10px;
+  font-family:'Fraunces',serif;font-weight:900;font-style:italic;
+  font-size:140px;line-height:1;letter-spacing:-0.06em;
+  color:var(--border);pointer-events:none;user-select:none;
+  transition:color 300ms;
+}
+.svc-card:hover .svc-ghost{color:rgba(232,25,44,0.06);}
+.svc-num{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:0.24em;color:var(--ink-faint);margin-bottom:32px;
+}
+.svc-name{
+  font-family:'Fraunces',serif;font-weight:400;
+  font-size:26px;color:var(--ink);margin-bottom:16px;
+  letter-spacing:-0.025em;transition:color 200ms;
+}
+.svc-card:hover .svc-name{color:var(--red);}
+.svc-desc{
+  font-family:'Fraunces',serif;font-weight:300;
+  font-size:15px;color:var(--ink-mid);line-height:1.78;
+}
+.svc-list{margin-top:32px;list-style:none;display:flex;flex-direction:column;gap:11px;}
+.svc-list li{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  color:var(--ink-dim);display:flex;align-items:center;gap:14px;
+  transition:color 200ms;
+}
+.svc-card:hover .svc-list li{color:var(--ink-mid);}
+.svc-list li::before{
+  content:'';width:12px;height:1px;background:var(--red);flex-shrink:0;
+  transition:width 500ms cubic-bezier(0.16,1,0.3,1);
+}
+.svc-card:hover .svc-list li::before{width:20px;}
+
+/* ══════════════════════════════════════════
+   PORTFOLIO
+══════════════════════════════════════════ */
+#proyectos{
+  position:relative;z-index:2;
+  padding:var(--pad-section) var(--pad-h) 0;
+}
+.port-grid{
+  margin-top:72px;
+  display:grid;grid-template-columns:1fr 1fr;
+  grid-template-rows:540px 360px 360px;gap:2px;
+}
+.port-card{
+  position:relative;overflow:hidden;cursor:none;
+  border:1px solid var(--border);transition:border-color 300ms;
+}
+.port-card.span2{grid-column:span 2;}
+.port-card:hover{border-color:var(--red);}
+.port-bg{
+  position:absolute;inset:0;background-size:cover;background-position:center;
+  transition:transform 1400ms cubic-bezier(0.16,1,0.3,1);will-change:transform;
+  filter:sepia(8%) saturate(88%);
+}
+.port-card:hover .port-bg{transform:scale(1.06);}
+.port-grad{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(22,14,6,0.88) 0%,rgba(22,14,6,0.02) 55%,transparent);
+}
+.port-glass{
+  position:absolute;bottom:0;left:0;right:0;padding:32px 36px;
+  transform:translateY(16px);opacity:0;
+  transition:transform 560ms cubic-bezier(0.16,1,0.3,1),opacity 560ms;
+}
+.port-card:hover .port-glass{transform:translateY(0);opacity:1;}
+.port-tag{
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  letter-spacing:0.22em;text-transform:uppercase;color:var(--red);margin-bottom:8px;
+}
+.port-name{
+  font-family:'Fraunces',serif;font-weight:400;
+  font-size:22px;color:#F3EDE0;letter-spacing:-0.02em;
+}
+
+/* ══════════════════════════════════════════
+   NAYARIT
+══════════════════════════════════════════ */
+#nayarit{
+  position:relative;z-index:2;
+  padding:var(--pad-section) var(--pad-h);
+  background:var(--cream-alt);
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+}
+.nayarit-grid{
+  margin-top:72px;display:grid;grid-template-columns:1fr 1fr;
+  border:1px solid var(--border-mid);
+}
+.nay-col{padding:52px 48px;border-right:1px solid var(--border);}
+.nay-col:last-child{border-right:none;background:var(--cream-card);}
+.nay-col-label{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:0.26em;text-transform:uppercase;color:var(--red);
+  margin-bottom:36px;display:flex;align-items:center;gap:12px;
+}
+.nay-col-label::before{content:'';width:26px;height:1px;background:var(--red);}
+.nay-items{display:flex;flex-direction:column;}
+.nay-item{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:18px 0;border-bottom:1px solid var(--border);
+}
+.nay-item:last-child{border-bottom:none;}
+.nay-place{
+  font-family:'Fraunces',serif;font-weight:300;
+  font-size:16px;color:var(--ink);
+}
+.nay-dist{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  color:var(--red);letter-spacing:0.12em;
+}
+.nay-hl{
+  padding:28px;border:1px solid var(--border-mid);margin-bottom:12px;
+  transition:border-color 300ms;
+}
+.nay-hl:hover{border-color:var(--red);}
+.nay-hl-n{
+  font-family:'Fraunces',serif;font-weight:300;
+  font-size:clamp(40px,4.5vw,64px);line-height:1;letter-spacing:-0.04em;color:var(--ink);
+}
+.nay-hl-n em{font-style:normal;color:var(--red);}
+.nay-hl-l{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  color:var(--ink-dim);letter-spacing:0.16em;text-transform:uppercase;margin-top:8px;
+}
+.nay-desc{
+  font-family:'Fraunces',serif;font-weight:300;
+  font-size:16px;color:var(--ink-mid);line-height:1.8;margin-top:24px;
+}
+
+/* ══════════════════════════════════════════
+   QUOTE — sección oscura cálida
+══════════════════════════════════════════ */
+#quote{
+  position:relative;z-index:2;overflow:hidden;
+  padding:160px var(--pad-h);
+  background-image:url('imgs/quote.jpg');
+  background-size:cover;background-position:center 30%;
+  background-attachment:fixed;
+}
+#quote::before{
+  content:'';position:absolute;inset:0;
+  background:rgba(20,13,6,0.84);/* overlay cálido */
+}
+.quote-inner{position:relative;z-index:2;max-width:920px;}
+.quote-mark{
+  font-family:'Fraunces',serif;font-size:120px;line-height:0.7;
+  color:var(--red);opacity:0.28;margin-bottom:10px;
+}
+.quote-text{
+  font-family:'Fraunces',serif;font-weight:300;
+  font-size:clamp(28px,4vw,52px);color:#F3EDE0;
+  line-height:1.15;letter-spacing:-0.03em;
+}
+.quote-text em{font-style:italic;font-weight:900;color:var(--red);}
+.quote-sub{
+  margin-top:28px;font-family:'JetBrains Mono',monospace;
+  font-size:10px;letter-spacing:0.22em;text-transform:uppercase;
+  color:rgba(243,237,224,0.35);
+}
+
+/* ══════════════════════════════════════════
+   PILARES — DISEÑA / CONSTRUYE / VALÚA / ENTREGA
+══════════════════════════════════════════ */
+#pilares{
+  position:relative;z-index:2;
+  padding:var(--pad-section) var(--pad-h);
+  border-bottom:1px solid var(--border);
+}
+.pilares-intro{
+  font-family:'Fraunces',serif;font-weight:300;
+  font-size:18px;color:var(--ink-mid);line-height:1.78;
+  max-width:560px;margin-bottom:80px;margin-top:-20px;
+}
+.pilares-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border:1px solid var(--border-mid);
+}
+.pilar{
+  padding:52px 36px;text-align:center;cursor:none;
+  border-right:1px solid var(--border);
+  transition:background 300ms;
+  position:relative;
+}
+.pilar:last-child{border-right:none;}
+.pilar:hover{background:var(--cream-alt);}
+/* Línea inferior al hover */
+.pilar::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:1.5px;
+  background:var(--red);transform:scaleX(0);transform-origin:center;
+  transition:transform 560ms cubic-bezier(0.16,1,0.3,1);
+}
+.pilar:hover::after{transform:scaleX(1);}
+.pilar-word{
+  font-family:'Fraunces',serif;font-weight:900;font-style:italic;
+  font-size:clamp(28px,3.2vw,48px);letter-spacing:-0.04em;line-height:1;
+  color:var(--ink);margin-bottom:18px;
+  transition:color 300ms;
+}
+.pilar:hover .pilar-word{color:var(--red);}
+.pilar-name{
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  font-weight:400;letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--ink-faint);margin-bottom:14px;
+}
+.pilar-desc{
+  font-family:'Fraunces',serif;font-weight:300;
+  font-size:14px;color:var(--ink-mid);line-height:1.68;
+}
+
+/* ══════════════════════════════════════════
+   INSIGHTS
+══════════════════════════════════════════ */
+#insights{
+  position:relative;z-index:2;
+  padding:var(--pad-section) var(--pad-h);
+  background:var(--cream-alt);
+  border-bottom:1px solid var(--border);
+}
+.insights{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);}
+.insight{
+  background:var(--cream-card);padding:44px 40px;
+  border-top:2px solid var(--red);
+  transition:background 300ms;
+}
+.insight:nth-child(2){border-top-color:var(--ink-mid);}
+.insight:nth-child(3){border-top-color:var(--ink-dim);}
+.insight:hover{background:#FAF5EE;}
+.insight-num{
+  font-family:'Fraunces',serif;font-weight:300;
+  font-size:48px;letter-spacing:-0.04em;line-height:1;
+  color:var(--ink-faint);margin-bottom:18px;
+}
+.insight-title{
+  font-family:'Fraunces',serif;font-weight:400;
+  font-size:20px;color:var(--ink);margin-bottom:12px;letter-spacing:-0.01em;
+}
+.insight-body{
+  font-family:'Fraunces',serif;font-weight:300;
+  font-size:15px;color:var(--ink-mid);line-height:1.72;
+}
+
+/* ══════════════════════════════════════════
+   PROCESO
+══════════════════════════════════════════ */
+#proceso{
+  position:relative;z-index:2;
+  padding:var(--pad-section) var(--pad-h);
+}
+.proc-list{margin-top:72px;display:flex;flex-direction:column;gap:1px;background:var(--border);}
+.proc-item{
+  display:grid;grid-template-columns:80px 1fr auto;gap:36px;
+  padding:36px 40px;background:var(--cream-card);
+  border-left:2px solid transparent;
+  transition:border-color 300ms,background 300ms,transform 300ms cubic-bezier(0.16,1,0.3,1);
+  cursor:none;
+}
+.proc-item:hover{border-left-color:var(--red);background:#FAF5EE;transform:translateX(6px);}
+.proc-num{
+  font-family:'Fraunces',serif;font-weight:300;
+  font-size:56px;letter-spacing:-0.04em;opacity:0.25;line-height:1;color:var(--ink);
+}
+.proc-name{
+  font-family:'Fraunces',serif;font-weight:400;
+  font-size:22px;color:var(--ink);margin-bottom:10px;letter-spacing:-0.02em;
+}
+.proc-desc{
+  font-family:'Fraunces',serif;font-weight:300;
+  font-size:15px;color:var(--ink-mid);line-height:1.72;
+}
+.proc-tag{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:0.18em;text-transform:uppercase;
+  padding:7px 14px;border:1px solid var(--border-mid);
+  color:var(--ink-dim);align-self:center;white-space:nowrap;
+}
+
+/* ══════════════════════════════════════════
+   CONTACTO
+══════════════════════════════════════════ */
+#contacto{
+  position:relative;z-index:2;
+  padding:var(--pad-section) var(--pad-h);
+  background:var(--cream-alt);
+  border-top:1px solid var(--border);
+}
+.ct-wrap{display:grid;grid-template-columns:1fr 1fr;gap:96px;align-items:start;}
+.ct-logo-img{width:80px;height:80px;object-fit:contain;margin-bottom:44px;opacity:0.85;}
+.ci-block{margin-bottom:28px;}
+.ci-label{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:0.22em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:7px;
+}
+.ci-val{
+  font-family:'Fraunces',serif;font-weight:300;
+  font-size:18px;color:var(--ink);
+}
+.ci-val a{color:var(--ink);text-decoration:none;transition:color 200ms;}
+.ci-val a:hover{color:var(--red);}
+
+/* Botones de canal */
+.ct-channels{margin-top:36px;}
+.ct-channels-label{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:0.22em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:14px;
+}
+.ct-btns{display:flex;gap:8px;flex-wrap:wrap;}
+.ct-btn{
+  display:inline-flex;align-items:center;gap:9px;
+  padding:11px 18px;border:1px solid var(--border-mid);
+  color:var(--ink-mid);text-decoration:none;cursor:none;
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:0.14em;text-transform:uppercase;
+  transition:border-color 300ms,color 300ms;
+}
+.ct-btn:hover{border-color:var(--red);color:var(--red);}
+.ct-btn svg{width:13px;height:13px;flex-shrink:0;}
+.ci-list{
+  margin-top:36px;font-family:'Fraunces',serif;
+  font-weight:300;font-size:16px;color:var(--ink-dim);line-height:2.4;
+}
+
+/* Form */
+.f-group{margin-bottom:18px;}
+.f-label{
+  display:block;font-family:'JetBrains Mono',monospace;
+  font-size:10px;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--ink-dim);margin-bottom:10px;
+}
+.f-inp{
+  width:100%;padding:14px 18px;
+  background:var(--cream-card);
+  border:1px solid var(--border-mid);
+  color:var(--ink);font-family:'Fraunces',serif;font-weight:300;font-size:16px;
+  outline:none;transition:border-color 300ms,background 300ms;
+}
+.f-inp:focus{border-color:var(--red);background:#FBF7F2;}
+.f-inp::placeholder{color:var(--ink-faint);}
+textarea.f-inp{resize:vertical;min-height:120px;}
+.f-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+
+/* Selector canal */
+.f-method{display:flex;gap:6px;flex-wrap:wrap;}
+.f-method-btn{
+  flex:1;padding:11px 8px;text-align:center;
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:0.14em;text-transform:uppercase;
+  border:1px solid var(--border-mid);color:var(--ink-dim);
+  cursor:none;transition:border-color 300ms,color 300ms,background 300ms;
+}
+.f-method-btn:hover,.f-method-btn.active{
+  border-color:var(--red);color:var(--red);
+  background:rgba(232,25,44,0.04);
+}
+
+.btn-sub{
+  width:100%;padding:17px;
+  background:var(--red);color:var(--cream);
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  font-weight:400;letter-spacing:0.2em;text-transform:uppercase;
+  border:none;cursor:none;position:relative;overflow:hidden;margin-top:10px;
+  transition:background 200ms;
+}
+.btn-sub:hover{background:var(--red-deep);}
+.btn-sub span{position:relative;z-index:1;}
+.f-ok{
+  display:none;padding:16px;
+  border:1px solid var(--ink-mid);color:var(--ink-mid);
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:0.1em;text-align:center;margin-top:14px;
+}
+
+/* ══════════════════════════════════════════
+   CLOSING
+══════════════════════════════════════════ */
+.closing{
+  position:relative;z-index:2;
+  padding:100px var(--pad-h);text-align:center;
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+/* Número de fondo decorativo */
+.closing::before{
+  content:'A+A';
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  font-family:'Fraunces',serif;font-weight:900;font-style:italic;
+  font-size:280px;line-height:1;letter-spacing:-0.06em;
+  color:var(--border);pointer-events:none;
+  z-index:0;white-space:nowrap;
+}
+.closing-inner{position:relative;z-index:1;}
+.closing-quote{
+  font-family:'Fraunces',serif;font-style:italic;font-weight:300;
+  font-size:clamp(22px,3.2vw,40px);line-height:1.3;max-width:840px;
+  margin:0 auto 32px;color:var(--ink);letter-spacing:-0.025em;
+}
+.closing-quote strong{font-weight:900;font-style:italic;color:var(--red);}
+.closing-attr{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  letter-spacing:0.24em;text-transform:uppercase;color:var(--ink-faint);
+}
+.closing-cta{margin-top:48px;display:flex;justify-content:center;gap:14px;}
+
+/* ── FOOTER ── */
+footer{
+  position:relative;z-index:2;
+  border-top:1px solid var(--border);
+  background:var(--warm-dark);
+  padding:32px var(--pad-h);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.f-logo{display:flex;align-items:center;gap:12px;}
+.f-logo img{height:30px;width:30px;object-fit:contain;filter:brightness(0) invert(1);opacity:0.7;}
+.f-brand{font-family:'Fraunces',serif;font-weight:300;font-size:16px;letter-spacing:0.05em;color:rgba(243,237,224,0.7);}
+.f-brand em{font-style:normal;color:var(--red);}
+.f-copy{font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(243,237,224,0.28);letter-spacing:0.12em;}
+.f-links{display:flex;gap:28px;list-style:none;}
+.f-links a{
+  font-family:'JetBrains Mono',monospace;font-size:10px;
+  color:rgba(243,237,224,0.28);text-decoration:none;
+  letter-spacing:0.16em;text-transform:uppercase;transition:color 200ms;
+}
+.f-links a:hover{color:var(--red);}
+
+/* ── DIVISOR editorial ── */
+.divider{
+  display:block;width:100%;height:1px;
+  background:var(--border);margin:0;
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1024px){
+  :root{--pad-section:100px;--pad-h:28px;}
+  nav{padding:16px 28px;} .nav-links{display:none;}
+  .hero-content{padding:0 28px 80px;}
+  .about-grid,.ct-wrap{grid-template-columns:1fr;}
+  .about-img{min-height:300px;} .about-img-overlay{background:linear-gradient(to bottom,transparent 55%,var(--cream) 100%);}
+  .stats-row{grid-template-columns:1fr 1fr;}
+  .svc-grid,.pilares-grid,.insights{grid-template-columns:1fr;}
+  .port-grid{grid-template-columns:1fr;grid-template-rows:auto;}
+  .port-card.span2{grid-column:auto;height:280px;} .port-card{height:240px;}
+  .nayarit-grid{grid-template-columns:1fr;}
+  .proc-item{grid-template-columns:1fr;gap:14px;}
+  footer{flex-direction:column;gap:20px;text-align:center;}
+  .closing-cta{flex-direction:column;align-items:center;}
+  .hero-stats-row{flex-wrap:wrap;}
+  .closing::before{font-size:160px;}
+}
+</style>
+</head>
+<body>
+
+<div class="scroll-progress" id="sp"></div>
+<div id="cur"><div class="dot"></div></div>
+
+<!-- ═══ NAV ═══ -->
+<nav id="nav">
+  <div class="nav-logo">
+    <img src="imgs/logo.png" alt="LAB A+A"/>
+    <div class="nav-brand">LAB <em>A+A</em></div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#proyectos">Proyectos</a></li>
+    <li><a href="#nayarit">Nayarit</a></li>
+    <li><a href="#proceso">Proceso</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a href="#contacto" class="nav-cta"><span>Iniciar proyecto</span></a>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section class="hero" id="inicio">
+  <div class="slides">
+    <div class="slide"></div>
+    <div class="slide"></div>
+    <div class="slide"></div>
+    <div class="slide"></div>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-accent-line"></div>
+  <div class="slide-dots" id="slideDots">
+    <div class="sdot active"><div class="sdot-fill"></div></div>
+    <div class="sdot"><div class="sdot-fill"></div></div>
+    <div class="sdot"><div class="sdot-fill"></div></div>
+    <div class="sdot"><div class="sdot-fill"></div></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Appraiser & Architect · Tepic, Nayarit</div>
+    <h1 class="hero-h1">
+      <span class="rw"><span class="rl" data-d="280">No es solo</span></span>
+      <span class="rw"><span class="rl" data-d="400">un espacio.</span></span>
+      <span class="rw"><span class="rl" data-d="520">Es tu <em>legado.</em></span></span>
+    </h1>
+    <div class="hero-sub">
+      <span class="rw"><span class="rl" data-d="700">
+        Diseño con propósito. Construcción sin excusas.<br>
+        Valuación con precisión — todo bajo un mismo techo.
+      </span></span>
+    </div>
+    <div class="hero-actions">
+      <span class="rw"><span class="rl" data-d="900" style="display:flex;gap:14px;">
+        <a href="#contacto" class="btn solid"><span>Iniciar proyecto →</span></a>
+        <a href="#proyectos" class="btn outline"><span>Ver proyectos</span></a>
+      </span></span>
+    </div>
+    <div class="hero-stats-row">
+      <div class="hstat">
+        <div class="hstat-n">12<em>+</em></div>
+        <div class="hstat-l">Años de experiencia</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-n">200<em>+</em></div>
+        <div class="hstat-l">Proyectos entregados</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-n">98<em>%</em></div>
+        <div class="hstat-l">Clientes satisfechos</div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-cue">
+    <div class="sc-line"></div>
+    <span class="sc-txt">Scroll</span>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="mq-wrap">
+  <div class="mq-track">
+    <div class="mq-item"><span class="mq-dot"></span>Diseño Arquitectónico</div>
+    <div class="mq-item"><span class="mq-dot"></span>Construcción Integral</div>
+    <div class="mq-item"><span class="mq-dot"></span>Valuación Inmobiliaria</div>
+    <div class="mq-item"><span class="mq-dot"></span>Supervisión de Obra</div>
+    <div class="mq-item"><span class="mq-dot"></span>Diseño de Interiores</div>
+    <div class="mq-item"><span class="mq-dot"></span>Tepic · Nayarit · Riviera</div>
+    <div class="mq-item"><span class="mq-dot"></span>Precisión en cada detalle</div>
+    <div class="mq-item"><span class="mq-dot"></span>Diseño Arquitectónico</div>
+    <div class="mq-item"><span class="mq-dot"></span>Construcción Integral</div>
+    <div class="mq-item"><span class="mq-dot"></span>Valuación Inmobiliaria</div>
+    <div class="mq-item"><span class="mq-dot"></span>Supervisión de Obra</div>
+    <div class="mq-item"><span class="mq-dot"></span>Diseño de Interiores</div>
+    <div class="mq-item"><span class="mq-dot"></span>Tepic · Nayarit · Riviera</div>
+    <div class="mq-item"><span class="mq-dot"></span>Precisión en cada detalle</div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats-section">
+  <div class="stats-row reveal" id="statsRow">
+    <div class="stat">
+      <div class="stat-number" data-target="12" data-suffix="+">0<span>+</span></div>
+      <div class="stat-label">Años de experiencia</div>
+      <div class="stat-delta">Trayectoria consolidada</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number" data-target="200" data-suffix="+">0<span>+</span></div>
+      <div class="stat-label">Proyectos entregados</div>
+      <div class="stat-delta">Residencial · Comercial</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number" data-target="98" data-suffix="%">0<span>%</span></div>
+      <div class="stat-label">Clientes satisfechos</div>
+      <div class="stat-delta">Referidos y repetidos</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number" data-target="3" data-suffix="">0</div>
+      <div class="stat-label">Especialidades</div>
+      <div class="stat-delta">Diseño · Construc. · Valuac.</div>
+    </div>
+  </div>
+</div>
+
+<!-- NOSOTROS -->
+<section id="nosotros">
+  <div class="about-grid">
+    <div class="about-img">
+      <img src="imgs/about.jpg" alt="Interiores LAB A+A" id="parImg"/>
+      <div class="about-img-overlay"></div>
+    </div>
+    <div class="about-text">
+      <div class="eyebrow">Quiénes somos</div>
+      <h2 class="s-title reveal">Interiores que<br><em>enamoran.</em></h2>
+      <p class="about-body reveal">
+        LAB A+A es un estudio especializado en arquitectura, construcción y valuación inmobiliaria en Tepic, Nayarit. Combinamos rigor técnico con visión creativa para entregar proyectos que trascienden lo ordinario — desde el primer trazo hasta la llave en mano.
+      </p>
+      <div class="about-pills reveal">
+        <span class="pill">Diseño</span>
+        <span class="pill">Construcción</span>
+        <span class="pill">Supervisión</span>
+        <span class="pill">Valuación</span>
+        <span class="pill">Gestión</span>
+        <span class="pill">Nayarit</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <div style="padding:0 var(--pad-h);">
+    <div class="eyebrow">Nuestros servicios</div>
+    <h2 class="s-title reveal">Todo lo que necesitas,<br>en un <em>solo lugar.</em></h2>
+  </div>
+  <div class="svc-grid">
+    <div class="svc-card reveal">
+      <div class="svc-ghost">01</div>
+      <div class="svc-num">01 — Diseño</div>
+      <div class="svc-name">Diseño Arquitectónico</div>
+      <div class="svc-desc">Proyectos que equilibran estética, funcionalidad y sustentabilidad — desde la idea hasta los planos constructivos.</div>
+      <ul class="svc-list">
+        <li>Diseño residencial y comercial</li>
+        <li>Diseño de interiores</li>
+        <li>Renders y visualización 3D</li>
+        <li>Planos y memoria descriptiva</li>
+      </ul>
+    </div>
+    <div class="svc-card reveal">
+      <div class="svc-ghost">02</div>
+      <div class="svc-num">02 — Construcción</div>
+      <div class="svc-name">Construcción Integral</div>
+      <div class="svc-desc">Ejecutamos cada proyecto con los más altos estándares de calidad, en tiempo y forma, sin sorpresas.</div>
+      <ul class="svc-list">
+        <li>Construcción residencial</li>
+        <li>Edificios y locales comerciales</li>
+        <li>Remodelaciones</li>
+        <li>Supervisión de obra</li>
+      </ul>
+    </div>
+    <div class="svc-card reveal">
+      <div class="svc-ghost">03</div>
+      <div class="svc-num">03 — Valuación</div>
+      <div class="svc-name">Valuación Inmobiliaria</div>
+      <div class="svc-desc">Dictámenes técnicos certificados para tomar decisiones informadas sobre tus activos inmobiliarios.</div>
+      <ul class="svc-list">
+        <li>Avalúos comerciales</li>
+        <li>Valuación hipotecaria</li>
+        <li>Peritaje inmobiliario</li>
+        <li>Análisis de mercado</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="proyectos">
+  <div style="padding:0 var(--pad-h);">
+    <div class="eyebrow neutral">Portafolio</div>
+    <h2 class="s-title reveal">Proyectos que <em>hablan<br>por sí solos.</em></h2>
+  </div>
+  <div class="port-grid" style="margin:0 var(--pad-h);">
+    <!-- Proyecto 1 — gran tarjeta span2 -->
+    <div class="port-card span2 reveal">
+      <div class="port-bg" style="background-image:url('imgs/port1.jpg');background-position:center 50%;"></div>
+      <div class="port-grad"></div>
+      <div class="port-glass">
+        <div class="port-tag">Diseño · Interiorismo · Residencial</div>
+        <div class="port-name">Sala con Vista — Residencia Sierra</div>
+      </div>
+    </div>
+    <!-- Proyecto 2 -->
+    <div class="port-card reveal">
+      <div class="port-bg" style="background-image:url('imgs/port2.jpg');background-position:center 55%;"></div>
+      <div class="port-grad"></div>
+      <div class="port-glass">
+        <div class="port-tag">Paisajismo · Alberca · Exterior</div>
+        <div class="port-name">Alberca con Jardín Tropical</div>
+      </div>
+    </div>
+    <!-- Proyecto 3 -->
+    <div class="port-card reveal">
+      <div class="port-bg" style="background-image:url('imgs/port3.jpg');background-position:center 50%;"></div>
+      <div class="port-grad"></div>
+      <div class="port-glass">
+        <div class="port-tag">Construcción · Exterior · Lounge</div>
+        <div class="port-name">Pérgola Lounge — Nayarit</div>
+      </div>
+    </div>
+    <!-- Proyecto 4 -->
+    <div class="port-card reveal">
+      <div class="port-bg" style="background-image:url('imgs/port4.jpg');background-position:center 50%;"></div>
+      <div class="port-grad"></div>
+      <div class="port-glass">
+        <div class="port-tag">Diseño · Terraza · Hostelería</div>
+        <div class="port-name">Terraza Bar Exterior</div>
+      </div>
+    </div>
+    <!-- Proyecto 5 -->
+    <div class="port-card reveal">
+      <div class="port-bg" style="background-image:url('imgs/port5.jpg');background-position:center 40%;"></div>
+      <div class="port-grad"></div>
+      <div class="port-glass">
+        <div class="port-tag">Construcción · Real · Tropical</div>
+        <div class="port-name">Proyecto Tropical — Riviera Nayarit</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NAYARIT -->
+<section id="nayarit">
+  <div class="eyebrow">Raíces en Nayarit</div>
+  <h2 class="s-title reveal">Diseñamos para<br><em>este territorio.</em></h2>
+  <p class="pilares-intro reveal">Conocemos el clima, los materiales, los reglamentos y el mercado de Nayarit mejor que nadie. Esa ventaja se traduce en proyectos más inteligentes, más durables y con mayor valor a largo plazo.</p>
+  <div class="nayarit-grid reveal">
+    <div class="nay-col">
+      <div class="nay-col-label">Zona de influencia</div>
+      <div class="nay-items">
+        <div class="nay-item"><span class="nay-place">Tepic (sede)</span><span class="nay-dist">Base principal</span></div>
+        <div class="nay-item"><span class="nay-place">Xalisco · Compostela</span><span class="nay-dist">30 min</span></div>
+        <div class="nay-item"><span class="nay-place">Bahía de Banderas</span><span class="nay-dist">1h 15min</span></div>
+        <div class="nay-item"><span class="nay-place">Sayulita · Punta Mita</span><span class="nay-dist">1h 30min</span></div>
+        <div class="nay-item"><span class="nay-place">San Blas · Novillero</span><span class="nay-dist">1h 10min</span></div>
+        <div class="nay-item"><span class="nay-place">Puerto Vallarta</span><span class="nay-dist">1h 45min</span></div>
+      </div>
+    </div>
+    <div class="nay-col">
+      <div class="nay-col-label">Por qué Nayarit</div>
+      <div class="nay-hl">
+        <div class="nay-hl-n">$1,200<em> m²</em></div>
+        <div class="nay-hl-l">Costo promedio de construcción en Tepic</div>
+      </div>
+      <div class="nay-hl">
+        <div class="nay-hl-n">+18<em>%</em></div>
+        <div class="nay-hl-l">Plusvalía anual en Riviera Nayarit</div>
+      </div>
+      <p class="nay-desc">Nayarit vive un boom inmobiliario sin precedentes. El momento de construir o invertir es ahora — con el equipo local de mayor experiencia.</p>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<div id="quote">
+  <div class="quote-inner reveal">
+    <div class="quote-mark">"</div>
+    <div class="quote-text">Construimos espacios que<br><em>trascienden lo ordinario.</em></div>
+    <div class="quote-sub">LAB A+A — Appraiser & Architect · Tepic, Nayarit</div>
+  </div>
+</div>
+
+<!-- PILARES -->
+<section id="pilares">
+  <div class="eyebrow neutral">Nuestra forma de trabajar</div>
+  <h2 class="s-title reveal">Cuatro pilares,<br>un <em>resultado.</em></h2>
+  <div class="pilares-grid reveal">
+    <div class="pilar">
+      <div class="pilar-name">Visión creativa</div>
+      <div class="pilar-word">Diseña</div>
+      <div class="pilar-desc">Cada proyecto inicia con escucha profunda. Traducimos tus necesidades en espacios con propósito y precisión estética.</div>
+    </div>
+    <div class="pilar">
+      <div class="pilar-name">Ejecución impecable</div>
+      <div class="pilar-word">Construye</div>
+      <div class="pilar-desc">Obra supervisada al detalle, materiales de calidad comprobada y plazos que se cumplen. Sin improvisaciones.</div>
+    </div>
+    <div class="pilar">
+      <div class="pilar-name">Certeza de inversión</div>
+      <div class="pilar-word">Valúa</div>
+      <div class="pilar-desc">Dictámenes certificados para que compres, vendas o financies con información real. Tu patrimonio respaldado.</div>
+    </div>
+    <div class="pilar">
+      <div class="pilar-name">Llave en mano</div>
+      <div class="pilar-word">Entrega</div>
+      <div class="pilar-desc">Walkthrough completo, garantías documentadas y acompañamiento post-entrega. Así se hace un proyecto de verdad.</div>
+    </div>
+  </div>
+</section>
+
+<!-- INSIGHTS -->
+<section id="insights">
+  <div class="eyebrow">Por qué elegirnos</div>
+  <h2 class="s-title reveal">Lo que nos hace <em>distintos.</em></h2>
+  <div class="insights">
+    <div class="insight reveal">
+      <div class="insight-num">01</div>
+      <div class="insight-title">Un equipo, tres especialidades</div>
+      <div class="insight-body">No subcontratamos lo esencial. Diseño, construcción y valuación viven bajo el mismo techo — lo que elimina fricciones y reduce errores entre fases.</div>
+    </div>
+    <div class="insight reveal">
+      <div class="insight-num">02</div>
+      <div class="insight-title">Datos reales, no estimaciones vacías</div>
+      <div class="insight-body">Cada valuación y propuesta está respaldada por análisis de mercado actual de Nayarit. Números que sostienen decisiones de inversión.</div>
+    </div>
+    <div class="insight reveal">
+      <div class="insight-num">03</div>
+      <div class="insight-title">Entrega que se cumple</div>
+      <div class="insight-body">Supervisión constante, reportes periódicos y un equipo que permanece desde el primer trazo hasta la llave en mano. El 98% no es casualidad.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESO -->
+<section id="proceso">
+  <div class="eyebrow neutral">Cómo trabajamos</div>
+  <h2 class="s-title reveal">Un proceso <em>claro<br>y transparente.</em></h2>
+  <div class="proc-list">
+    <div class="proc-item reveal">
+      <div class="proc-num">01</div>
+      <div class="proc-content">
+        <div class="proc-name">Consulta inicial</div>
+        <div class="proc-desc">Escuchamos tu proyecto, evaluamos viabilidad técnica y definimos el alcance exacto — sin costo, sin compromiso.</div>
+      </div>
+      <div class="proc-tag">Sin costo</div>
+    </div>
+    <div class="proc-item reveal">
+      <div class="proc-num">02</div>
+      <div class="proc-content">
+        <div class="proc-name">Propuesta detallada</div>
+        <div class="proc-desc">Plan con tiempos, costos y especificaciones técnicas. Cada línea es un compromiso. Sin letra chica, sin sorpresas al final.</div>
+      </div>
+      <div class="proc-tag">Esta semana</div>
+    </div>
+    <div class="proc-item reveal">
+      <div class="proc-num">03</div>
+      <div class="proc-content">
+        <div class="proc-name">Ejecución supervisada</div>
+        <div class="proc-desc">Construimos con supervisión constante. Reportes de avance periódicos y comunicación directa con el equipo a cargo.</div>
+      </div>
+      <div class="proc-tag">En obra</div>
+    </div>
+    <div class="proc-item reveal">
+      <div class="proc-num">04</div>
+      <div class="proc-content">
+        <div class="proc-name">Entrega llave en mano</div>
+        <div class="proc-desc">Inspección final de calidad, walkthrough completo y acompañamiento post-entrega. El proyecto es tuyo desde el día uno.</div>
+      </div>
+      <div class="proc-tag">Garantizado</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="eyebrow">Contacto</div>
+  <h2 class="s-title reveal" style="margin-bottom:60px;">¿Listo para <em>empezar?</em></h2>
+  <div class="ct-wrap">
+    <div class="reveal">
+      <img src="imgs/logo.png" alt="LAB A+A" class="ct-logo-img"/>
+      <div class="ci-block"><div class="ci-label">Ubicación</div><div class="ci-val">Tepic, Nayarit · México</div></div>
+      <div class="ci-block"><div class="ci-label">Teléfono</div><div class="ci-val"><a href="tel:3111614155">311 161 4155</a></div></div>
+      <div class="ci-block"><div class="ci-label">Email</div><div class="ci-val"><a href="mailto:arqlabaa@gmail.com">arqlabaa@gmail.com</a></div></div>
+      <div class="ct-channels">
+        <div class="ct-channels-label">Contáctanos por</div>
+        <div class="ct-btns">
+          <a href="https://wa.me/523111614155" class="ct-btn" target="_blank">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp
+          </a>
+          <a href="tel:3111614155" class="ct-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.09a16 16 0 006 6l.36-.35a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            Llamada
+          </a>
+          <a href="mailto:arqlabaa@gmail.com" class="ct-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            Email
+          </a>
+        </div>
+      </div>
+      <div class="ci-list">Diseño Arquitectónico<br>Construcción Integral<br>Gestión y Supervisión<br>Valuación Inmobiliaria</div>
+    </div>
+    <form id="ctForm" class="reveal" onsubmit="onSub(event)">
+      <div class="f-grid">
+        <div class="f-group"><label class="f-label">Nombre</label><input type="text" class="f-inp" placeholder="Tu nombre" required/></div>
+        <div class="f-group"><label class="f-label">Teléfono</label><input type="tel" class="f-inp" placeholder="311 000 0000"/></div>
+      </div>
+      <div class="f-group"><label class="f-label">Email</label><input type="email" class="f-inp" placeholder="tu@email.com" required/></div>
+      <div class="f-group">
+        <label class="f-label">Servicio de interés</label>
+        <select class="f-inp" style="appearance:none;cursor:none;">
+          <option value="">Selecciona un servicio</option>
+          <option>Diseño Arquitectónico</option>
+          <option>Construcción Integral</option>
+          <option>Valuación Inmobiliaria</option>
+          <option>Diseño de Interiores</option>
+          <option>Gestión y Supervisión</option>
+        </select>
+      </div>
+      <div class="f-group">
+        <label class="f-label">Prefiero que me contacten por</label>
+        <div class="f-method" id="fMethod">
+          <div class="f-method-btn active" onclick="setMethod(this)">WhatsApp</div>
+          <div class="f-method-btn" onclick="setMethod(this)">Llamada</div>
+          <div class="f-method-btn" onclick="setMethod(this)">Email</div>
+        </div>
+      </div>
+      <div class="f-group"><label class="f-label">Cuéntanos tu proyecto</label><textarea class="f-inp" placeholder="Describe tu proyecto, ubicación, presupuesto aproximado..."></textarea></div>
+      <button type="submit" class="btn-sub"><span>Enviar mensaje →</span></button>
+      <div class="f-ok" id="fOk">Mensaje enviado. Te contactamos en menos de 24 horas.</div>
+    </form>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<div class="closing">
+  <div class="closing-inner">
+    <div class="closing-quote reveal">
+      "Los espacios que construimos hoy<br>son la <strong>memoria que habitan mañana.</strong>"
+    </div>
+    <div class="closing-attr">LAB A+A — Appraiser & Architect · Tepic, Nayarit</div>
+    <div class="closing-cta reveal">
+      <a href="#contacto" class="btn solid"><span>Iniciar proyecto →</span></a>
+      <a href="https://wa.me/523111614155" class="btn outline-dark" target="_blank"><span>WhatsApp directo</span></a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo">
+    <img src="imgs/logo.png" alt="LAB A+A"/>
+    <div class="f-brand">LAB <em>A+A</em></div>
+  </div>
+  <div class="f-copy">© 2025 LAB A+A — Appraiser & Architect · Tepic, Nayarit</div>
+  <ul class="f-links">
+    <li><a href="#inicio">Inicio</a></li>
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#proyectos">Proyectos</a></li>
+    <li><a href="#nayarit">Nayarit</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+</footer>
+
+<script>
+(function(){
+'use strict';
+function boot(){
+  try{initCursor();}catch(e){}
+  try{initNav();}catch(e){}
+  try{initProgress();}catch(e){}
+  try{initReveals();}catch(e){}
+  try{initTextReveals();}catch(e){}
+  try{initCounters();}catch(e){}
+  try{initSlideDots();}catch(e){}
+  try{initParallax();}catch(e){}
+  setTimeout(function(){
+    document.querySelectorAll('.reveal:not(.in)').forEach(function(el){el.classList.add('in');});
+  },1600);
+}
+
+function initCursor(){
+  var cur=document.getElementById('cur');
+  var dot=cur.querySelector('.dot');
+  document.addEventListener('mousemove',function(e){
+    dot.style.left=e.clientX+'px';dot.style.top=e.clientY+'px';
+  });
+  document.querySelectorAll('a,button,.svc-card,.port-card,.pilar,.pill,.btn,.proc-item,.ct-btn,.f-method-btn').forEach(function(el){
+    el.addEventListener('mouseenter',function(){document.body.classList.add('hov');});
+    el.addEventListener('mouseleave',function(){document.body.classList.remove('hov');});
+  });
+}
+
+function initNav(){
+  var nav=document.getElementById('nav');
+  window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>50);},{passive:true});
+}
+
+function initProgress(){
+  var sp=document.getElementById('sp');
+  var ticking=false;
+  window.addEventListener('scroll',function(){
+    if(ticking)return;ticking=true;
+    requestAnimationFrame(function(){
+      var sh=document.body.scrollHeight-window.innerHeight;
+      sp.style.width=(sh>0?Math.round(window.scrollY/sh*100):0)+'%';
+      ticking=false;
+    });
+  },{passive:true});
+}
+
+function initReveals(){
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('in');});
+  },{threshold:0.07});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+}
+
+function initTextReveals(){
+  document.querySelectorAll('.rl').forEach(function(el){
+    setTimeout(function(){el.classList.add('go');},+(el.dataset.d||0));
+  });
+}
+
+function initCounters(){
+  var row=document.getElementById('statsRow');
+  if(!row)return;
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting)return;
+      e.target.querySelectorAll('[data-target]').forEach(function(n){
+        var target=+(n.dataset.target||0),suffix=n.dataset.suffix||'',dur=1500,start=null;
+        var span=n.querySelector('span');
+        var color=span?span.outerHTML:'<span style="color:var(--red)">'+suffix+'</span>';
+        (function step(ts){
+          if(!start)start=ts;
+          var p=Math.min((ts-start)/dur,1),ease=1-Math.pow(1-p,4);
+          n.innerHTML=Math.round(ease*target)+color;
+          if(p<1)requestAnimationFrame(step);
+        })(performance.now());
+      });
+      io.disconnect();
+    });
+  },{threshold:0.3});
+  io.observe(row);
+}
+
+function initSlideDots(){
+  var dots=document.querySelectorAll('.sdot');
+  if(!dots.length)return;
+  var cur=0;
+  setInterval(function(){
+    dots[cur].classList.remove('active');
+    var f=dots[cur].querySelector('.sdot-fill');
+    if(f)f.style.animation='none';
+    cur=(cur+1)%dots.length;
+    dots[cur].classList.add('active');
+    var f2=dots[cur].querySelector('.sdot-fill');
+    if(f2){f2.style.animation='none';void f2.offsetWidth;f2.style.animation='fillDot 6s linear forwards';}
+  },6000);
+}
+
+function initParallax(){
+  var img=document.getElementById('parImg');
+  if(!img)return;
+  var ticking=false;
+  window.addEventListener('scroll',function(){
+    if(ticking)return;ticking=true;
+    requestAnimationFrame(function(){
+      var wrap=img.closest('.about-img');
+      if(wrap){
+        var r=wrap.getBoundingClientRect();
+        img.style.transform='translateY('+(window.innerHeight/2-(r.top+r.height/2))*0.1+'px)';
+      }
+      ticking=false;
+    });
+  },{passive:true});
+}
+
+window.onSub=function(e){
+  e.preventDefault();
+  var s=e.target.querySelector('.btn-sub span');
+  if(s)s.textContent='Enviando…';
+  setTimeout(function(){
+    if(s)s.textContent='Enviar mensaje →';
+    var ok=document.getElementById('fOk');
+    if(ok)ok.style.display='block';
+    e.target.reset();
+    setTimeout(function(){if(ok)ok.style.display='none';},5000);
+  },1200);
+};
+
+window.setMethod=function(el){
+  document.querySelectorAll('.f-method-btn').forEach(function(b){b.classList.remove('active');});
+  el.classList.add('active');
+};
+
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',boot);}
+else{boot();}
+})();
+</script>
+</body>
+</html>
