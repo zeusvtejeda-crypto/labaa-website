@@ -179,10 +179,16 @@ nav.scrolled{
   background-size:cover;background-position:center;
   opacity:0;will-change:opacity,transform;
 }
-.slide:nth-child(1){background-image:url('imgs/hero1.jpg');background-image:image-set(url('imgs/hero1.webp') type('image/webp'),url('imgs/hero1.jpg') type('image/jpeg'));background-position:center 55%;animation:kb1 24s ease-in-out infinite 0s;}
-.slide:nth-child(2){background-image:url('imgs/hero2.jpg');background-image:image-set(url('imgs/hero2.webp') type('image/webp'),url('imgs/hero2.jpg') type('image/jpeg'));background-position:center 50%;animation:kb2 24s ease-in-out infinite -6s;}
-.slide:nth-child(3){background-image:url('imgs/hero3.jpg');background-image:image-set(url('imgs/hero3.webp') type('image/webp'),url('imgs/hero3.jpg') type('image/jpeg'));background-position:center 40%;animation:kb3 24s ease-in-out infinite -12s;}
-.slide:nth-child(4){background-image:url('imgs/hero4.jpg');background-image:image-set(url('imgs/hero4.webp') type('image/webp'),url('imgs/hero4.jpg') type('image/jpeg'));background-position:center 45%;animation:kb4 24s ease-in-out infinite -18s;}
+.slide:nth-child(1){background-image:url('imgs/hero1-sm.webp');background-position:center 55%;animation:kb1 24s ease-in-out infinite 0s;}
+.slide:nth-child(2){background-image:url('imgs/hero2-sm.webp');background-position:center 50%;animation:kb2 24s ease-in-out infinite -6s;}
+.slide:nth-child(3){background-image:url('imgs/hero3-sm.webp');background-position:center 40%;animation:kb3 24s ease-in-out infinite -12s;}
+.slide:nth-child(4){background-image:url('imgs/hero4-sm.webp');background-position:center 45%;animation:kb4 24s ease-in-out infinite -18s;}
+@media(min-width:769px){
+.slide:nth-child(1){background-image:url('imgs/hero1-lg.webp');}
+.slide:nth-child(2){background-image:url('imgs/hero2-lg.webp');}
+.slide:nth-child(3){background-image:url('imgs/hero3-lg.webp');}
+.slide:nth-child(4){background-image:url('imgs/hero4-lg.webp');}
+}
 @keyframes kb1{0%{opacity:0;transform:scale(1.08) translate(1%,0.5%);}8%{opacity:1;}33%{opacity:1;transform:scale(1.14) translate(-0.5%,-0.5%);}41%{opacity:0;}100%{opacity:0;}}
 @keyframes kb2{0%{opacity:0;transform:scale(1.10) translate(-0.5%,0);}8%{opacity:1;}33%{opacity:1;transform:scale(1.16) translate(0.5%,0.5%);}41%{opacity:0;}100%{opacity:0;}}
 @keyframes kb3{0%{opacity:0;transform:scale(1.06) translate(0,0.5%);}8%{opacity:1;}33%{opacity:1;transform:scale(1.13) translate(-0.5%,-0.5%);}41%{opacity:0;}100%{opacity:0;}}
@@ -486,6 +492,18 @@ nav.scrolled{
   filter:sepia(8%) saturate(88%);
 }
 .port-card:hover .port-bg{transform:scale(1.06);}
+.pb1{background-image:url('imgs/port1-sm.webp');}
+.pb2{background-image:url('imgs/port2-sm.webp');}
+.pb3{background-image:url('imgs/port3-sm.webp');}
+.pb4{background-image:url('imgs/port4-sm.webp');}
+.pb5{background-image:url('imgs/port5-sm.webp');}
+@media(min-width:769px){
+.pb1{background-image:url('imgs/port1-lg.webp');}
+.pb2{background-image:url('imgs/port2-lg.webp');}
+.pb3{background-image:url('imgs/port3-lg.webp');}
+.pb4{background-image:url('imgs/port4-lg.webp');}
+.pb5{background-image:url('imgs/port5-lg.webp');}
+}
 .port-grad{
   position:absolute;inset:0;
   background:linear-gradient(to top,rgba(22,14,6,0.88) 0%,rgba(22,14,6,0.02) 55%,transparent);
@@ -565,11 +583,11 @@ nav.scrolled{
 #quote{
   position:relative;z-index:2;overflow:hidden;
   padding:160px var(--pad-h);
-  background-image:url('imgs/quote.jpg');
-  background-image:image-set(url('imgs/quote.webp') type('image/webp'),url('imgs/quote.jpg') type('image/jpeg'));
+  background-image:url('imgs/quote-sm.webp');
   background-size:cover;background-position:center 30%;
   background-attachment:fixed;
 }
+@media(min-width:769px){#quote{background-image:url('imgs/quote-lg.webp');}}
 #quote::before{
   content:'';position:absolute;inset:0;
   background:rgba(20,13,6,0.84);/* overlay cálido */
@@ -1009,7 +1027,8 @@ footer{
   <div class="about-grid">
     <div class="about-img">
       <picture>
-        <source srcset="imgs/about.webp" type="image/webp"/>
+        <source media="(min-width:769px)" srcset="imgs/about-lg.webp" type="image/webp"/>
+        <source srcset="imgs/about-sm.webp" type="image/webp"/>
         <img src="imgs/about.jpg" alt="Interiores LAB A+A" id="parImg"/>
       </picture>
       <div class="about-img-overlay"></div>
@@ -1087,7 +1106,7 @@ footer{
   <div class="port-grid" style="margin:0 var(--pad-h);">
     <!-- Proyecto 1 — gran tarjeta span2 -->
     <div class="port-card span2 reveal">
-      <div class="port-bg" style="background-image:url('imgs/port1.jpg');background-image:image-set(url('imgs/port1.webp') type('image/webp'),url('imgs/port1.jpg') type('image/jpeg'));background-position:center 50%;"></div>
+      <div class="port-bg pb1" style="background-position:center 50%;"></div>
       <div class="port-grad"></div>
       <div class="port-glass">
         <div class="port-tag">Diseño · Interiorismo · Residencial</div>
@@ -1096,7 +1115,7 @@ footer{
     </div>
     <!-- Proyecto 2 -->
     <div class="port-card reveal">
-      <div class="port-bg" style="background-image:url('imgs/port2.jpg');background-image:image-set(url('imgs/port2.webp') type('image/webp'),url('imgs/port2.jpg') type('image/jpeg'));background-position:center 55%;"></div>
+      <div class="port-bg pb2" style="background-position:center 55%;"></div>
       <div class="port-grad"></div>
       <div class="port-glass">
         <div class="port-tag">Paisajismo · Alberca · Exterior</div>
@@ -1105,7 +1124,7 @@ footer{
     </div>
     <!-- Proyecto 3 -->
     <div class="port-card reveal">
-      <div class="port-bg" style="background-image:url('imgs/port3.jpg');background-image:image-set(url('imgs/port3.webp') type('image/webp'),url('imgs/port3.jpg') type('image/jpeg'));background-position:center 50%;"></div>
+      <div class="port-bg pb3" style="background-position:center 50%;"></div>
       <div class="port-grad"></div>
       <div class="port-glass">
         <div class="port-tag">Construcción · Exterior · Lounge</div>
@@ -1114,7 +1133,7 @@ footer{
     </div>
     <!-- Proyecto 4 -->
     <div class="port-card reveal">
-      <div class="port-bg" style="background-image:url('imgs/port4.jpg');background-image:image-set(url('imgs/port4.webp') type('image/webp'),url('imgs/port4.jpg') type('image/jpeg'));background-position:center 50%;"></div>
+      <div class="port-bg pb4" style="background-position:center 50%;"></div>
       <div class="port-grad"></div>
       <div class="port-glass">
         <div class="port-tag">Diseño · Terraza · Hostelería</div>
@@ -1123,7 +1142,7 @@ footer{
     </div>
     <!-- Proyecto 5 -->
     <div class="port-card reveal">
-      <div class="port-bg" style="background-image:url('imgs/port5.jpg');background-image:image-set(url('imgs/port5.webp') type('image/webp'),url('imgs/port5.jpg') type('image/jpeg'));background-position:center 40%;"></div>
+      <div class="port-bg pb5" style="background-position:center 40%;"></div>
       <div class="port-grad"></div>
       <div class="port-glass">
         <div class="port-tag">Construcción · Real · Tropical</div>
