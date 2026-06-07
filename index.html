@@ -907,6 +907,100 @@ footer{
 @media(max-width:600px){
   .timeline{grid-template-columns:1fr;}
 }
+
+/* ══════════════════════════════════════════
+   V2 — ELEVACIÓN VISUAL
+══════════════════════════════════════════ */
+
+/* Hero — H1 más imponente, subtítulo más legible */
+.hero-h1{font-size:clamp(58px,9.5vw,142px);}
+.hero-sub{font-size:18px;color:rgba(243,237,224,0.68);max-width:500px;}
+.btn.solid{padding:17px 42px;letter-spacing:0.2em;}
+.btn.outline{padding:17px 36px;}
+
+/* Herramienta de coordenadas — badge flotante en hero */
+.hero-badge{
+  position:absolute;top:50%;right:var(--pad-h);z-index:4;
+  transform:translateY(-50%);
+  display:flex;flex-direction:column;align-items:flex-end;gap:6px;
+  opacity:0;animation:fadeIn 1s ease 1.8s forwards;
+}
+.hb-line{width:1px;height:60px;background:linear-gradient(to bottom,transparent,rgba(243,237,224,0.2));margin-left:auto;}
+.hb-tag{
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  letter-spacing:0.22em;text-transform:uppercase;
+  color:rgba(243,237,224,0.28);writing-mode:vertical-rl;
+  text-orientation:mixed;transform:rotate(180deg);
+}
+
+/* Servicios — iconos y tarjeta más premium */
+.svc-icon{
+  width:36px;height:36px;margin-bottom:28px;
+  color:var(--ink-faint);
+  transition:color 400ms;
+}
+.svc-card:hover .svc-icon{color:var(--red);}
+.svc-name{font-size:28px;}
+
+/* Portfolio — overlay siempre visible en tarjeta grande */
+.port-card.span2 .port-glass{transform:translateY(0);opacity:1;}
+.port-name{
+  font-family:'Fraunces',serif;font-weight:700;font-style:italic;
+  font-size:clamp(18px,2.2vw,28px);color:#F3EDE0;letter-spacing:-0.03em;line-height:1.1;
+}
+.port-card.span2 .port-name{font-size:clamp(22px,3vw,40px);}
+.port-tag{letter-spacing:0.26em;}
+
+/* About — badge credencial */
+.about-badge{
+  margin-top:32px;padding:14px 20px;
+  border:1px solid var(--border);
+  display:inline-flex;align-items:center;gap:12px;
+}
+.about-badge-check{
+  width:20px;height:20px;border-radius:50%;flex-shrink:0;
+  background:var(--red);display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:11px;line-height:1;
+}
+.about-badge-text{
+  font-family:'JetBrains Mono',monospace;font-size:9px;
+  color:var(--ink-dim);letter-spacing:0.14em;text-transform:uppercase;
+}
+
+/* Pre-footer — banda de CTA de impacto */
+.pre-footer{
+  position:relative;z-index:2;
+  background:var(--warm-dark);
+  padding:88px var(--pad-h);
+  display:flex;align-items:center;justify-content:space-between;gap:48px;
+  border-top:1px solid rgba(243,237,224,0.06);
+}
+.pf-text{
+  font-family:'Fraunces',serif;font-weight:300;font-style:italic;
+  font-size:clamp(26px,3.8vw,54px);
+  color:var(--cream);letter-spacing:-0.035em;line-height:1.0;
+  max-width:640px;
+}
+.pf-text strong{font-weight:900;font-style:italic;color:var(--red);}
+.pf-actions{display:flex;gap:14px;flex-shrink:0;}
+
+/* Sección título — ligeramente más grande */
+.s-title{font-size:clamp(38px,5.5vw,88px);}
+
+/* Animaciones escalonadas para grids */
+.svc-grid .svc-card:nth-child(1){transition-delay:0ms;}
+.svc-grid .svc-card:nth-child(2){transition-delay:80ms;}
+.svc-grid .svc-card:nth-child(3){transition-delay:160ms;}
+.garantias-grid .garantia:nth-child(1){transition-delay:0ms;}
+.garantias-grid .garantia:nth-child(2){transition-delay:100ms;}
+.garantias-grid .garantia:nth-child(3){transition-delay:200ms;}
+.garantias-grid .garantia:nth-child(4){transition-delay:300ms;}
+
+/* Responsive additions */
+@media(max-width:1024px){
+  .pre-footer{flex-direction:column;align-items:flex-start;gap:36px;}
+  .hero-badge{display:none;}
+}
 </style>
 </head>
 <body>
@@ -980,6 +1074,10 @@ footer{
         <div class="hstat-l">Clientes satisfechos</div>
       </div>
     </div>
+  </div>
+  <div class="hero-badge">
+    <span class="hb-tag">Tepic · Nayarit · México</span>
+    <div class="hb-line"></div>
   </div>
   <div class="scroll-cue">
     <div class="sc-line"></div>
@@ -1058,6 +1156,10 @@ footer{
         <span class="pill">Gestión</span>
         <span class="pill">Nayarit</span>
       </div>
+      <div class="about-badge reveal">
+        <div class="about-badge-check">✓</div>
+        <div class="about-badge-text">Arquitectos titulados · Valuadores certificados SHF</div>
+      </div>
     </div>
   </div>
 </section>
@@ -1071,6 +1173,12 @@ footer{
   <div class="svc-grid">
     <div class="svc-card reveal">
       <div class="svc-ghost">01</div>
+      <svg class="svc-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="18" cy="18" r="15"/>
+        <line x1="18" y1="3" x2="18" y2="33"/>
+        <line x1="3" y1="18" x2="33" y2="18"/>
+        <circle cx="18" cy="18" r="4"/>
+      </svg>
       <div class="svc-num">01 — Diseño</div>
       <div class="svc-name">Diseño Arquitectónico</div>
       <div class="svc-desc">Proyectos que equilibran estética, funcionalidad y sustentabilidad — desde la idea hasta los planos constructivos.</div>
@@ -1083,6 +1191,12 @@ footer{
     </div>
     <div class="svc-card reveal">
       <div class="svc-ghost">02</div>
+      <svg class="svc-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1" xmlns="http://www.w3.org/2000/svg">
+        <rect x="4" y="14" width="28" height="20"/>
+        <polyline points="2,14 18,4 34,14"/>
+        <rect x="11" y="22" width="6" height="12"/>
+        <rect x="20" y="22" width="6" height="8"/>
+      </svg>
       <div class="svc-num">02 — Construcción</div>
       <div class="svc-name">Construcción Integral</div>
       <div class="svc-desc">Ejecutamos cada proyecto con los más altos estándares de calidad, en tiempo y forma, sin sorpresas.</div>
@@ -1095,6 +1209,14 @@ footer{
     </div>
     <div class="svc-card reveal">
       <div class="svc-ghost">03</div>
+      <svg class="svc-icon" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1" xmlns="http://www.w3.org/2000/svg">
+        <line x1="18" y1="4" x2="18" y2="32"/>
+        <line x1="18" y1="12" x2="5" y2="20"/>
+        <line x1="18" y1="12" x2="31" y2="20"/>
+        <path d="M5 20 Q5 27 11.5 27 Q18 27 18 20"/>
+        <path d="M18 20 Q18 27 24.5 27 Q31 27 31 20"/>
+        <line x1="12" y1="32" x2="24" y2="32"/>
+      </svg>
       <div class="svc-num">03 — Valuación</div>
       <div class="svc-name">Valuación Inmobiliaria</div>
       <div class="svc-desc">Dictámenes técnicos certificados para tomar decisiones informadas sobre tus activos inmobiliarios.</div>
@@ -1392,6 +1514,15 @@ footer{
   </div>
 </div>
 
+<!-- PRE-FOOTER CTA -->
+<div class="pre-footer">
+  <div class="pf-text">¿Listo para construir algo <strong>extraordinario?</strong></div>
+  <div class="pf-actions">
+    <a href="#contacto" class="btn solid"><span>Iniciar proyecto →</span></a>
+    <a href="tel:3111614155" class="btn outline"><span>311 161 4155</span></a>
+  </div>
+</div>
+
 <!-- FOOTER -->
 <footer>
   <div class="f-logo">
@@ -1415,6 +1546,7 @@ function boot(){
   try{initCursor();}catch(e){}
   try{initNav();}catch(e){}
   try{initProgress();}catch(e){}
+  try{initStagger();}catch(e){}
   try{initReveals();}catch(e){}
   try{initTextReveals();}catch(e){}
   try{initCounters();}catch(e){}
@@ -1423,6 +1555,14 @@ function boot(){
   setTimeout(function(){
     document.querySelectorAll('.reveal:not(.in)').forEach(function(el){el.classList.add('in');});
   },1600);
+}
+
+function initStagger(){
+  document.querySelectorAll('.svc-grid,.garantias-grid,.timeline').forEach(function(grid){
+    grid.querySelectorAll('.reveal').forEach(function(el,i){
+      el.style.transitionDelay=(i*90)+'ms';
+    });
+  });
 }
 
 function initCursor(){
